@@ -1,14 +1,18 @@
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
+
+import java.util.Random;
 
 public class Cell {
 
-    final static private double rect_size = 50;
-    final static private double stroke = 0.3;
+    private Random rand = new Random();
 
-    final static private Color alive_color = Color.BLACK;
+    final static private double rect_size = 7.5;
+    final static private double stroke = 0.1;
+
+//    final static private Color alive_color = Color.BLACK;
     final static private Color dead_color = Color.WHITE;
 
     private boolean isAlive;
@@ -16,21 +20,21 @@ public class Cell {
     private int row_index;
     private boolean recently_changed = false;
 
-    private Rectangle rectangle;
+    private Circle circle;
     private StackPane stackPane;
 
     public Cell(int col_index, int row_index) {
         isAlive = false;
         this.col_index = col_index;
         this.row_index = row_index;
-        rectangle = new Rectangle(rect_size, rect_size);
-        rectangle.setFill(null);
-        rectangle.setStroke(Color.BLACK);
-        rectangle.setStrokeWidth(stroke);
-        rectangle.setFill(dead_color);
+        circle = new Circle(rect_size);
+        circle.setFill(null);
+        circle.setStroke(Color.GREY);
+        circle.setStrokeWidth(stroke);
+        circle.setFill(dead_color);
         stackPane = new StackPane();
         stackPane.setAlignment(Pos.CENTER);
-        stackPane.getChildren().add(rectangle);
+        stackPane.getChildren().add(circle);
     }
 
     public StackPane getStackPane() {
@@ -44,9 +48,12 @@ public class Cell {
     public void setAlive(boolean alive) {
         isAlive = alive;
         if (alive) {
-            rectangle.setFill(alive_color);
+            int r = rand.nextInt(256);
+            int g = rand.nextInt(256);
+            int b = rand.nextInt(256);
+            circle.setFill(Color.rgb(r, g, b));
         } else  {
-            rectangle.setFill(dead_color);
+            circle.setFill(dead_color);
         }
     }
 
